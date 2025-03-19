@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "usuario": "lam1",
+        "is_staff": false,
+        "password": null
+    },
+    {
+        "id": 2,
+        "usuario": "lam2",
+        "is_staff": false,
+        "password": null
+    },
+    {
+        "id": 3,
+        "usuario": "Admin",
+        "is_staff": true,
+        "password": "123"
+    }
+]
