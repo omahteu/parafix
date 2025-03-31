@@ -62,7 +62,7 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
-                    <a href="home.html" class="app-brand-link">
+                    <a href="home2.html" class="app-brand-link">
                         <span class="app-brand-logo demo">
                             <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -121,7 +121,7 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item active">
-                        <a href="home.html" class="menu-link">
+                        <a href="home2.html" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
@@ -178,55 +178,9 @@
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <h5 class="card-title m-0 me-2">Entradas</h5>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body entradas">
                                         <ul class="p-0 m-0">
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div
-                                                    class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <button type="button" class="btn btn-primary">Não
-                                                            Tecido</button>
-                                                        <button type="button" class="btn btn-primary">Release</button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div
-                                                    class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <button type="button" class="btn btn-primary">Fitilho</button>
-                                                        <button type="button" class="btn btn-primary">Gancho</button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div
-                                                    class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
 
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <button type="button" class="btn btn-primary">Fim de OP</button>
-                                                        <button type="button" class="btn btn-primary">Mascarado</button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div
-                                                    class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <button type="button" class="btn btn-primary">Requisitar no PC
-                                                            Factory</button>
-                                                        <button type="button" class="btn btn-primary">Acabou MP</button>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="d-flex mb-4 pb-1">
-                                                <div
-                                                    class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                                    <div class="user-progress d-flex align-items-center gap-1">
-                                                        <button type="button" class="btn btn-primary">Kanban</button>
-                                                    </div>
-                                                </div>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -268,9 +222,6 @@
                                             <h5 class="card-header">
                                                 <select name="" id="selecionar_kanban_maquinas" class="form-control">
                                                     <option value="" hidden>Selecione o kanban</option>
-                                                    <option value="lam1">Lam 1</option>
-                                                    <option value="lam2">Lam 2</option>
-                                                    <option value="lam3">Lam 3</option>
                                                 </select>
                                             </h5>
 
@@ -278,16 +229,15 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr class="text-nowrap">
-                                                            <th>Descrição</th>
                                                             <th>Código</th>
+                                                            <th>Descrição</th>
                                                             <th>Qnt</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="kanban_maquinas"></tbody>
                                                 </table>
                                             </div>
-                                            <button type="button" class="btn btn-primary"
-                                                id="imprimir_kanban">Imprimir</button>
+                                            <button type="button" class="btn btn-primary" id="imprimir_kanban">Imprimir</button>
                                         </div>
                                     </div>
                                 </div>
@@ -359,9 +309,76 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-    <script type="module" src="../js/carrega_dados_mocados.js"></script>
-    <script type="module" src="../js/selecionar_kanban.js"></script>
+    <!-- <script type="module" src="../js/carrega_dados_mocados.js"></script>
+    <script type="module" src="../js/selecionar_kanban.js"></script> -->
     <script type="module" src="../js/imprimir_kanban.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Carregar os nomes dos Kanbans salvos no localStorage
+            const tabelaKanban = JSON.parse(localStorage.getItem('kanban')) || {};
+            const $selectKanban = $('#selecionar_kanban_maquinas');
+            const $tabelaKanban = $('#kanban_maquinas');
+      
+            // Preencher o select com os nomes dos Kanbans
+            Object.keys(tabelaKanban).forEach((nomeKanban) => {
+                $selectKanban.append(`<option value="${nomeKanban}">${nomeKanban}</option>`);
+            });
+      
+            // Evento para carregar os dados do Kanban selecionado
+            $selectKanban.on('change', function () {
+                const kanbanSelecionado = $(this).val();
+                const itensKanban = tabelaKanban[kanbanSelecionado] || [];
+        
+                // Limpar a tabela antes de carregar os novos dados
+                $tabelaKanban.empty();
+        
+                // Preencher a tabela com os itens do Kanban selecionado
+                itensKanban.forEach((item) => {
+                    const row = `
+                        <tr>
+                            <td>${item.codigo}</td>
+                            <td>${item.descricao}</td>
+                            <td>${item.quantidade}</td>
+                        </tr>
+                    `;
+                    $tabelaKanban.append(row);
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Obter o valor do usuário logado na tabela "usuario" do localStorage
+            const usuarioData = JSON.parse(localStorage.getItem('usuario'))['usuario'] || {};
+            // const maquinaUsuario = usuarioData.maquina || ''; // Supondo que a chave seja "maquina"
+
+            // Obter os dados da tabela "acoes" do localStorage
+            const tabelaAcoes = JSON.parse(localStorage.getItem('acoes')) || {};
+            const acoesUsuario = tabelaAcoes[usuarioData] || []; // Filtrar as ações pela máquina do usuário
+            
+            // Selecionar o elemento onde os botões serão adicionados
+            const $listaAcoes = $('.entradas ul'); // Ajuste o seletor para o local correto
+
+            // Limpar a lista antes de preenchê-la
+            $listaAcoes.empty();
+
+            // Gerar os botões dinamicamente com base nos dados
+            acoesUsuario.forEach((acao) => {
+                const button = `
+                    <li class="d-flex mb-4 pb-1">
+                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="user-progress d-flex align-items-center gap-1">
+                                <button type="button" class="btn btn-primary">${acao.nome}</button>
+                            </div>
+                        </div>
+                    </li>
+                `;
+                $listaAcoes.append(button);
+            });
+        });
+    </script>
 
 </body>
 
